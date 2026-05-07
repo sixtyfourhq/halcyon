@@ -1,0 +1,86 @@
+---
+modules:
+  - type: files
+    files:
+      - source: base
+        destination: /
+
+  - type: dnf
+    install:
+      packages:
+        - micro
+        - fish
+    remove:
+      packages:
+        - firefox
+        - firefox-langpacks
+
+  - type: dnf
+    repos:
+      copr:
+        - atim/starship
+    install:
+      packages:
+        - starship
+
+  # Install uupd for updates
+  - type: dnf
+    repos:
+      copr:
+        - ublue-os/packages
+    install:
+      packages:
+        - uupd
+
+  # Gaming Software
+  - type: dnf
+    repos:
+      files:
+        - https://negativo17.org/repos/fedora-multimedia.repo
+    install:
+      packages:
+        - steam
+        - lutris
+        - mangohud
+        - gamescope
+
+  - type: dnf
+    install:
+      packages:
+        - docker
+        - python3-tkinter
+        - python3-pip
+        - flatpak-builder
+        - libvirt
+        - libvirt-nss
+        - virt-manager
+        - foundry
+
+  - type: os-release
+    properties:
+      ID: halcyon
+      ID_LIKE: fedora
+      NAME: halcyon
+      PRETTY_NAME: halcyon
+      VERSION_CODENAME: star
+      DEFAULT_HOSTNAME: halcyon
+
+  - type: script
+    scripts:
+      - rechunker-fix.sh
+
+  # Enable services
+  - type: systemd
+    system:
+      enabled:
+        - rechunker-group-fix.service
+        - docker.service
+        - uupd.timer
+      disabled:
+        - bootc-fetch-apply-updates.timer
+
+  - type: brew
+    direct-pull: true
+
+  - type: justfiles
+    validate: true

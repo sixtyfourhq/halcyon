@@ -1,0 +1,10 @@
+[Unit]
+Description="Run uupd"
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=8h
+Unit=uupd.service
+
+[Install]
+WantedBy=timers.target
