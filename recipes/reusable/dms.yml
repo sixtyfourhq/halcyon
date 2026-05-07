@@ -1,0 +1,37 @@
+modules:
+  - type: dnf
+    repos:
+      copr:
+        - name: avengemedia/dms
+          chroot: fedora-44-x86_64
+        - name: yalter/niri
+          chroot: fedora-44-x86_64
+    install:
+      packages:
+        - acl
+        - dms
+        - dms-greeter
+        - greetd
+        - niri
+        - quickshell-git
+        - matugen
+        - cliphist
+        - danksearch
+        - dgop
+        - ghostty
+        - gnome-keyring
+        - gnome-keyring-pam
+        - seahorse
+        - xdg-utils
+        - nautilus
+        - sushi
+
+  - type: files
+    files:
+      - source: greetd
+        destination: /
+
+  - type: systemd
+    system:
+      enabled:
+        - greetd.service

@@ -9,7 +9,6 @@ modules:
     install:
       packages:
         - micro
-        - fish
     remove:
       packages:
         - firefox
@@ -18,21 +17,11 @@ modules:
   - type: dnf
     repos:
       copr:
-        - atim/starship
-    install:
-      packages:
-        - starship
-
-  # Install uupd for updates
-  - type: dnf
-    repos:
-      copr:
         - ublue-os/packages
     install:
       packages:
         - uupd
 
-  # Gaming Software
   - type: dnf
     repos:
       files:

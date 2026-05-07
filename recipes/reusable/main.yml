@@ -20,4 +20,6 @@ modules:
         - gnome-shell-extension-appindicator
 
   - from-file: reusable/common.yml
+  - from-file: reusable/dms.yml
+  - from-file: reusable/nix.yml
   - from-file: reusable/common-fonts.yml

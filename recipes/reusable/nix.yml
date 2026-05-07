@@ -1,0 +1,11 @@
+modules:
+  - type: dnf
+    install:
+      packages:
+        - curl
+        - xz
+        - git
+  - type: script
+    snippets:
+      - |
+        sh <(curl -L https://nixos.org/nix/install) --daemon

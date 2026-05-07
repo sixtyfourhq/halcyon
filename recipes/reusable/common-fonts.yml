@@ -2,4 +2,14 @@ modules:
   - type: fonts
     fonts:
       nerd-fonts:
+        - FiraCode
         - Hack
+        - SourceCodePro
+        - Terminus
+        - JetBrainsMono
+        - NerdFontsSymbolsOnly
+        - ComicShannsMono
+      google-fonts:
+        - Roboto
+        - Open Sans
+        - Inter
