@@ -6,9 +6,13 @@ modules:
         destination: /
 
   - type: dnf
+    repos:
+      copr:
+        - atim/starship
     install:
       packages:
         - micro
+        - starship
     remove:
       packages:
         - firefox
