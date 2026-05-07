@@ -25,6 +25,7 @@ modules:
         - xdg-utils
         - nautilus
         - sushi
+        - fastfetch
 
   - type: files
     files:
