@@ -26,6 +26,10 @@ modules:
         - nautilus
         - sushi
         - fastfetch
+    exclude:
+      - alacritty
+      - waybar
+      - fuzzel
 
   - type: files
     files:
