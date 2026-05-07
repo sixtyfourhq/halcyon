@@ -2,9 +2,15 @@
 name: halcyon-nvidia
 description: opinionated bootc image
 
-base-image: ghcr.io/blue-build/base-images/fedora-silverblue-nvidia-open
+base-image: ghcr.io/blue-build/base-images/fedora-base-nvidia-open
 image-version: 44
 
 modules:
+  - type: custom-kernel
+    source: local
+    kernel: cachyos-lto
+    initramfs: true
+    nvidia: true
+
   - from-file: reusable/main.yml
   - type: signing

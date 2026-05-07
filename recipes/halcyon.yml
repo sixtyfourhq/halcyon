@@ -6,5 +6,10 @@ base-image: ghcr.io/blue-build/base-images/fedora-base
 image-version: 44
 
 modules:
+  - type: custom-kernel
+    source: local
+    kernel: cachyos-lto
+    initramfs: true
+    nvidia: false
   - from-file: reusable/main.yml
   - type: signing

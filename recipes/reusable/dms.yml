@@ -27,14 +27,6 @@ modules:
         - sushi
         - fastfetch
 
-  - type: rpm-ostree
-    remove:
-      - gnome-shell
-      - gdm
-      - mutter
-      - gnome-session-wayland-session
-      - gnome-session-xsession
-
   - type: files
     files:
       - source: greetd

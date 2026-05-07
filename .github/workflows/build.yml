@@ -34,5 +34,3 @@ jobs:
           registry_token: ${{ github.token }}
           pr_event_number: ${{ github.event.number }}
           maximize_build_space: true
-          build_chunked_oci: true
-          build_opts: --rechunk-clear-plan
