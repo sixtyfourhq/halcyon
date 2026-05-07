@@ -1,4 +1,5 @@
 modules:
+  - type: gschema-overrides
   - type: dnf
     repos:
       copr:
