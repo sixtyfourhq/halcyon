@@ -14,10 +14,6 @@ modules:
         - scx-scheds
         - scx-tools
         - scx-manager
-  - type: dnf
-    remove:
-      packages:
-        - plasma-discover
 
   - type: dnf
     install:
