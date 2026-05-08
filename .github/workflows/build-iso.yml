@@ -4,6 +4,9 @@ on:
     workflows: ["bluebuild"]
     types:
       - completed
+  schedule:
+    - cron: "0 0 * * 5"
+  workflow_dispatch:
 
 jobs:
   build-iso:
