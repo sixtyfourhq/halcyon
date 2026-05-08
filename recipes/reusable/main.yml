@@ -1,25 +1,5 @@
 modules:
   - type: dnf
-    remove:
-      packages:
-        - gnome-software
-        - gnome-tour
-        - gnome-system-monitor
-        - yelp
-
-  - type: dnf
-    remove:
-      packages:
-        - gnome-classic-session
-        - gnome-shell-extension-common
-        - gnome-shell-extension-apps-menu-
-        - gnome-shell-extension-launch-new-instance
-        - gnome-shell-extension-places-menu
-        - gnome-shell-extension-window-list
-        - gnome-shell-extension-background-logo
-        - gnome-shell-extension-appindicator
-
-  - type: dnf
     repos:
       cleanup: true
       copr:
@@ -33,8 +13,16 @@ modules:
         - cachyos-settings
         - scx-scheds
         - scx-tools
+        - scx-manager
+  - type: dnf
+    remove:
+      packages:
+        - plasma-discover
 
+  - type: dnf
+    install:
+      packages:
+        - ptyxis
   - from-file: reusable/common.yml
-  - from-file: reusable/dms.yml
   - from-file: reusable/nix.yml
-  - from-file: reusable/common-fonts.yml
+  - from-file: reusable/common-misc.yml

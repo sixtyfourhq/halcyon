@@ -11,9 +11,3 @@ install-jetbrains-toolbox:
     #!/bin/bash
     brew tap ublue-os/tap
     brew install --cask jetbrains-toolbox-linux
-
-# Configure GDM to use the Monitor settings from the current user
-[group('Features')]
-gdm-monitor-setup:
-    #!/bin/bash
-    sudo cp /home/$(whoami)/.config/monitors.xml /etc/xdg/monitors.xml

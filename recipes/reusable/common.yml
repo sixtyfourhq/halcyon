@@ -27,6 +27,26 @@ modules:
         - uupd
 
   - type: dnf
+    remove:
+      packages:
+        - gnome-software
+        - gnome-tour
+        - gnome-system-monitor
+        - yelp
+
+  - type: dnf
+    remove:
+      packages:
+        - gnome-classic-session
+        - gnome-shell-extension-common
+        - gnome-shell-extension-apps-menu-
+        - gnome-shell-extension-launch-new-instance
+        - gnome-shell-extension-places-menu
+        - gnome-shell-extension-window-list
+        - gnome-shell-extension-background-logo
+        - gnome-shell-extension-appindicator
+
+  - type: dnf
     repos:
       files:
         - https://negativo17.org/repos/fedora-multimedia.repo
@@ -55,14 +75,13 @@ modules:
       ID_LIKE: fedora
       NAME: halcyon
       PRETTY_NAME: halcyon
-      VERSION_CODENAME: star
+      VERSION_CODENAME: asteroid
       DEFAULT_HOSTNAME: halcyon
 
   - type: script
     scripts:
       - rechunker-fix.sh
 
-  # Enable services
   - type: systemd
     system:
       enabled:
@@ -71,6 +90,10 @@ modules:
         - uupd.timer
       disabled:
         - bootc-fetch-apply-updates.timer
+
+  - type: gschema-overrides
+    include:
+      - zz1-halcyon.gschema.override
 
   - type: brew
     direct-pull: true

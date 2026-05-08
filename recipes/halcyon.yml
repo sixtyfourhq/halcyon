@@ -2,7 +2,7 @@
 name: halcyon
 description: opinionated bootc image
 
-base-image: ghcr.io/blue-build/base-images/fedora-base
+base-image: ghcr.io/blue-build/base-images/fedora-silverblue
 image-version: 44
 
 modules:
