@@ -1,38 +1,39 @@
 name: Generate Halcyon ISOs
+
 on:
   workflow_run:
     workflows: ["bluebuild"]
-    types:
-      - completed
+    types: [completed]
   schedule:
     - cron: "0 0 * * 5"
   workflow_dispatch:
 
 jobs:
   build-iso:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: >
+      github.event_name != 'workflow_run' ||
+      github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         include:
-          - variant: "standard"
-            image: "ghcr.io/sixtyfourhq/halcyon:latest"
-            filename: "halcyon.iso"
-          - variant: "nvidia"
-            image: "ghcr.io/sixtyfourhq/halcyon-nvidia:latest"
-            filename: "halcyon-nvidia.iso"
+          - variant: standard
+            image: ghcr.io/sixtyfourhq/halcyon:latest
+            filename: halcyon.iso
+          - variant: nvidia
+            image: ghcr.io/sixtyfourhq/halcyon-nvidia:latest
+            filename: halcyon-nvidia.iso
 
     permissions:
       contents: read
       packages: read
-      id-token: write
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Maximize Build Space
+      - name: Maximize build space
         uses: easimon/maximize-build-space@master
         with:
           root-reserve-mb: 2048
@@ -41,9 +42,11 @@ jobs:
           remove-haskell: "true"
 
       - name: Install BlueBuild CLI
+        shell: bash
         run: |
-          curl -L https://raw.githubusercontent.com/blue-build/cli/main/install.sh | bash
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          set -euo pipefail
+          docker run --pull always --rm ghcr.io/blue-build/cli:latest-installer | sudo bash
+          bluebuild --version
 
       - name: Login to GHCR
         uses: docker/login-action@v3
@@ -53,11 +56,12 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Generate ISO
+        shell: bash
         run: |
-          # Use -E to pass the GITHUB_PATH updates into the sudo environment
-          sudo -E $HOME/.local/bin/bluebuild generate-iso \
+          set -euo pipefail
+          sudo bluebuild generate-iso \
             --iso-name "${{ matrix.filename }}" \
-            image ${{ matrix.image }}
+            image "${{ matrix.image }}"
 
       - name: Configure MinIO Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -67,6 +71,8 @@ jobs:
           aws-region: us-east-1
 
       - name: Upload to MinIO
+        shell: bash
         run: |
-          aws s3 cp ./${{ matrix.filename }} s3://${{ secrets.MINIO_BUCKET }}/isos/ \
-            --endpoint-url ${{ secrets.MINIO_ENDPOINT }}
+          set -euo pipefail
+          aws s3 cp "./${{ matrix.filename }}" "s3://${{ secrets.MINIO_BUCKET }}/isos/" \
+            --endpoint-url "${{ secrets.MINIO_ENDPOINT }}"
